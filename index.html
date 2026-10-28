@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rylie Yin — Business Analytics &amp; Product</title>
+<style>
+  :root{
+    --gold:#c9ccd6; --gold2:#eef0f5; --ink:#f2ead8; --sub:#a9a294;
+    --line:#2b2b30; --bg:#0a0a0c; --card:#131315;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;overflow-x:hidden}
+  .wrap{max-width:800px;margin:0 auto;padding:0 22px 70px;position:relative;z-index:1}
+  .blob{position:fixed;border-radius:50%;filter:blur(90px);opacity:.14;z-index:0;pointer-events:none}
+  .blob.b1{width:340px;height:340px;background:#c9ccd6;top:-90px;left:-100px}
+  .blob.b2{width:300px;height:300px;background:#4a4e59;bottom:-70px;right:-90px}
+  /* nav */
+  nav{position:sticky;top:0;background:rgba(10,10,12,.88);backdrop-filter:blur(6px);border-bottom:1px solid rgba(201,204,214,.4);z-index:10}
+  nav .in{max-width:800px;margin:0 auto;padding:12px 22px;display:flex;justify-content:space-between;align-items:center}
+  nav .brand{font-weight:800;letter-spacing:.05em}
+  nav .brand span{color:var(--gold)}
+  nav a{color:var(--ink);text-decoration:none;font-size:14px;margin-left:16px}
+  nav a:hover{color:var(--gold2)}
+  /* hero */
+  header{padding:60px 0 6px;text-align:center}
+  .kicker{letter-spacing:.26em;font-size:12px;color:var(--gold);font-weight:700;text-transform:uppercase}
+  .avatar{width:138px;height:138px;border-radius:50%;object-fit:cover;display:block;margin:20px auto 4px;
+          border:3px solid var(--gold);box-shadow:0 0 0 5px rgba(201,204,214,.14),0 10px 28px rgba(0,0,0,.6)}
+  h1{font-family:"Playfair Display",Georgia,"Times New Roman",serif;font-size:48px;line-height:1.12;margin:12px 0 6px;font-weight:700}
+  h1 .gold{color:var(--gold)}
+  .role{font-size:14px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--gold2)}
+  .pitch{font-size:16.5px;color:#d9d3c3;max-width:520px;margin:14px auto 0}
+  .facts{margin-top:18px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+  .fact{font-size:13px;background:#151517;border:1px solid var(--line);border-radius:999px;padding:4px 12px;color:#d8d2c2}
+  /* flip badge — black & gold member card */
+  .badge-zone{margin:36px auto 2px;width:300px;max-width:86vw;perspective:1200px;cursor:pointer}
+  .badge{position:relative;width:100%;height:184px;transition:transform .6s;transform-style:preserve-3d}
+  .badge.flipped{transform:rotateY(180deg) rotate(-1.5deg)}
+  .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+        border-radius:16px;padding:20px 22px;text-align:left}
+  .face.front{background:linear-gradient(135deg,#1b1b1e,#050506);color:var(--gold2);border:1.5px solid var(--gold);
+        box-shadow:0 14px 34px rgba(0,0,0,.65), inset 0 0 24px rgba(201,204,214,.08)}
+  .face.back{background:#101012;border:1.5px solid rgba(201,204,214,.6);transform:rotateY(180deg);color:var(--ink);
+        box-shadow:0 14px 34px rgba(0,0,0,.65)}
+  .face .b-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+  .face .b-kicker{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);white-space:nowrap}
+  .face .b-no{font-size:12px;color:var(--gold);white-space:nowrap}
+  .face .b-name{font-family:"Playfair Display",Georgia,serif;font-size:29px;font-weight:700;margin-top:20px;color:#fff}
+  .face .b-line{font-size:14px;margin-top:2px;color:var(--gold2)}
+  .face .b-foot{position:absolute;left:22px;bottom:16px;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+  .face.back h4{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+  .face.back p{font-size:13.5px;color:#ddd6c6;line-height:1.55}
+  .hint{font-size:12px;color:var(--sub);margin-top:10px;text-align:center}
+  .btns{margin-top:22px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+  .btn{display:inline-block;padding:9px 18px;border-radius:999px;font-size:14px;text-decoration:none;border:1.5px solid var(--gold);
+       color:var(--gold2);background:transparent;transition:transform .12s,background .12s}
+  .btn:hover{transform:translateY(-1px);background:rgba(201,204,214,.12)}
+  .btn.main{background:var(--gold);color:#111;font-weight:700}
+  /* stats */
+  .stats{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:44px}
+  .stat{background:var(--card);border:1px solid rgba(201,204,214,.45);border-radius:14px;padding:12px 16px;min-width:148px;text-align:center}
+  .stat .n{font-family:"Playfair Display",Georgia,serif;font-size:25px;font-weight:700;color:var(--gold)}
+  .stat .t{font-size:12.5px;color:var(--sub)}
+  /* sections */
+  section{margin-top:58px}
+  h2{font-family:"Playfair Display",Georgia,serif;font-size:25px;margin-bottom:18px;color:#fff}
+  h2 .u{border-bottom:3px solid var(--gold)}
+  .about p{font-size:16px;color:#e6e0d0;max-width:700px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-bottom:14px;position:relative;
+        transition:transform .15s, box-shadow .15s, border-color .15s}
+  .card:hover{transform:translateY(-3px);border-color:rgba(201,204,214,.65);box-shadow:0 12px 28px rgba(0,0,0,.5)}
+  .card h3{font-size:18px;margin-bottom:2px;color:#fff}
+  .card .when{font-size:13px;color:var(--sub);margin-bottom:8px}
+  .card p{font-size:15px;color:#d9d3c3}
+  .sticker{position:absolute;top:-11px;right:16px;font-size:11.5px;font-weight:800;letter-spacing:.06em;
+           padding:3px 10px;border-radius:999px;transform:rotate(2.5deg)}
+  .sticker.s1{background:var(--gold);color:#111;border:1.5px solid #000}
+  .sticker.s2{background:#101012;color:var(--gold2);border:1.5px solid var(--gold)}
+  .sticker.s3{background:#232329;color:var(--gold2);border:1.5px solid var(--gold)}
+  .tags{margin-top:10px}
+  .tagchip{display:inline-block;font-size:12px;background:#1a1a1d;border:1px solid var(--line);
+           border-radius:999px;padding:2px 10px;margin:0 6px 6px 0;color:#c9c2ae}
+  .row{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .row .r{font-size:13px;color:var(--sub);white-space:nowrap}
+  .chips span{display:inline-block;background:#151517;border:1px solid var(--line);border-radius:999px;
+              padding:4px 12px;font-size:13px;margin:0 6px 8px 0;color:#d9d3c3}
+  .chips span:hover{border-color:var(--gold)}
+  footer{margin-top:64px;text-align:center;font-size:13.5px;color:var(--sub)}
+  a{color:var(--gold2)}
+
+  /* metallic gold gradient for the name + big headings */
+  h1, h2, .face .b-name{
+    background:linear-gradient(100deg,#8a6a1f 0%,#d4af37 28%,#f6e27a 50%,#d4af37 72%,#8a6a1f 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  h1 .gold{color:transparent}
+  h2 .u{border-bottom-color:#d4af37}
+</style>
+</head>
+<body>
+<div class="blob b1"></div><div class="blob b2"></div>
+
+<nav>
+  <div class="in">
+    <div class="brand">rylie<span>-yin</span></div>
+    <div>
+      <a href="#about">About</a><a href="#projects">Projects</a><a href="#experience">Experience</a><a href="#education">Education</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <header>
+    <div class="kicker">Portfolio 2027</div>
+    <img class="avatar" src="photo.jpg" alt="Jiaxin Rylie Yin">
+    <h1>Jiaxin <span class="gold">"Rylie"</span> Yin</h1>
+    <p class="role">Product · Business Analytics · AI</p>
+
+    <div class="badge-zone" onclick="document.getElementById('badge').classList.toggle('flipped')" title="Click to flip">
+      <div class="badge" id="badge">
+        <div class="face front">
+          <div class="b-top">
+            <div class="b-kicker">USC Marshall</div>
+            <div class="b-no">’27</div>
+          </div>
+          <div class="b-name">Rylie Yin</div>
+          <div class="b-line">M.S. Business Analytics</div>
+          <div class="b-foot">Product · Strategy · Analytics</div>
+        </div>
+        <div class="face back">
+          <h4>On the back</h4>
+          <p>📍 Los Angeles, CA<br>💼 Open to Summer 2027 internships<br>✉️ yinjiaxi@usc.edu</p>
+        </div>
+      </div>
+      <div class="hint">👆 click the card — it flips</div>
+    </div>
+
+    <div class="btns">
+      <a class="btn main" href="mailto:yinjiaxi@usc.edu">✉️ Email me</a>
+      <a class="btn" href="https://www.linkedin.com/in/jiaxin-yin-a469b0326" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="https://github.com/rylie-yin" target="_blank" rel="noopener">GitHub</a>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="n">2,128,605</div><div class="t">Amazon reviews cleaned</div></div>
+      <div class="stat"><div class="n">22,656</div><div class="t">duplicates removed</div></div>
+      <div class="stat"><div class="n">30+</div><div class="t">survey responses</div></div>
+      <div class="stat"><div class="n">22</div><div class="t">news cards, zero APIs</div></div>
+    </div>
+  </header>
+
+  <section id="about" class="about">
+    <h2><span class="u">About</span></h2>
+    <p>I'm a business analytics master's student at USC Marshall, with a statistics degree from Purdue.
+       I've measured how brands show up in AI search at O2 Tech, built go-to-market research at GShopper,
+       and cleaned two million Amazon reviews for a listing-review tool. I'm looking for Summer 2027 roles
+       in product, business operations, and analytics.</p>
+  </section>
+
+  <section id="projects">
+    <h2><span class="u">Projects</span></h2>
+
+    <div class="card">
+      <div class="sticker s1">🏆 FINALIST</div>
+      <div class="row"><h3>Briefly — AI Business-News Study App</h3><span class="r">Oct 2026</span></div>
+      <p class="when">AI Global Case Competition · USC Marshall · Team project</p>
+      <p>Turns long English business news into 3-minute study cards — plain-English summary, tap-to-explain
+         terms, a quick quiz. Validated with 30+ survey responses; MVP built on Enter with GPT; all 22 demo
+         articles found and screened by hand. No API.</p>
+      <div class="tags">
+        <span class="tagchip">Product discovery</span><span class="tagchip">User research</span>
+        <span class="tagchip">AI prototyping</span><span class="tagchip">Go-to-market</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="sticker s2">2.1M ROWS</div>
+      <div class="row"><h3>Amazon Appliance Listing Review Dashboard</h3><span class="r">Fall 2026</span></div>
+      <p class="when">DSO 576 Python project · Team Reviewlytics</p>
+      <p>Flags appliance listings that need a human look. I cleaned 2,128,605 reviews in Python — 22,656
+         duplicates removed, metadata matched 100% — and built labeling for four concern types: noise,
+         installation, compatibility, size.</p>
+      <div class="tags">
+        <span class="tagchip">Python · pandas</span><span class="tagchip">Data cleaning</span><span class="tagchip">Parquet</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="sticker s3">22 BATCHES</div>
+      <div class="row"><h3>Pharmaceutical Manufacturing Analytics</h3><span class="r">Aug – Dec 2025</span></div>
+      <p class="when">Corporate partner: AstraZeneca · Purdue</p>
+      <p>Pulled quality records out of messy PDFs with Python and analyzed 17,700+ QC observations across
+         22 batches, surfacing 1,400+ fault records for root-cause follow-up.</p>
+      <div class="tags">
+        <span class="tagchip">Python</span><span class="tagchip">PDF extraction</span><span class="tagchip">Statistical analysis</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <h2><span class="u">Experience</span></h2>
+
+    <div class="card">
+      <div class="row"><h3>AI Search Analytics Intern — O2 Tech</h3><span class="r">May – Jul 2025 · Shanghai</span></div>
+      <p>Measured brand visibility across Doubao, DeepSeek, and Manus for 10+ brands; turned findings into
+         30+ client articles and recommendations.</p>
+    </div>
+
+    <div class="card">
+      <div class="row"><h3>Business Development Intern — GShopper</h3><span class="r">Nov 2024 – Jan 2025 · Remote</span></div>
+      <p>Four market research reports and a cross-border go-to-market framework for international expansion.</p>
+    </div>
+
+    <div class="card">
+      <div class="row"><h3>Data &amp; ESG Analyst Intern — Mio Technology</h3><span class="r">Jul – Aug 2023 · Shanghai</span></div>
+      <p>Turned 200+ regulatory documents into standardized ESG data; presented research on 40+ global
+         ESG frameworks to 30+ teammates.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="u">Skills</span></h2>
+    <div class="chips">
+      <span>Python (pandas, NumPy)</span><span>SQL</span><span>R</span><span>Power BI</span><span>Excel</span>
+      <span>Data cleaning</span><span>Statistical analysis</span><span>Generative AI</span><span>GEO</span>
+      <span>Market research</span><span>User research</span>
+    </div>
+  </section>
+
+  <section id="education">
+    <h2><span class="u">Education</span></h2>
+    <div class="card">
+      <div class="row"><h3>USC Marshall School of Business</h3><span class="r">Los Angeles, CA</span></div>
+      <p>MS in Business Analytics (STEM) · 2026 – 2027</p>
+    </div>
+    <div class="card">
+      <div class="row"><h3>Purdue University</h3><span class="r">West Lafayette, IN</span></div>
+      <p>BS in Applied Statistics · 2022 – 2025</p>
+    </div>
+  </section>
+
+  <footer>
+    Built by hand — no API, just like the Briefly demo.<br>
+    <a href="mailto:yinjiaxi@usc.edu">yinjiaxi@usc.edu</a> ·
+    <a href="https://www.linkedin.com/in/jiaxin-yin-a469b0326" target="_blank" rel="noopener">LinkedIn</a> ·
+    <a href="https://github.com/rylie-yin" target="_blank" rel="noopener">GitHub</a>
+  </footer>
+
+</div>
+</body>
+</html>
